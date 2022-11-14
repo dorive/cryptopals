@@ -6,6 +6,7 @@ Conding and enconding library.
 @author: David Orive Miguel
 """
 
+import itertools
 from base64 import b64encode, b64decode
 
 
@@ -53,5 +54,24 @@ def xor_operator(str1, str2):
     return str_end, byte_end
     
     
+def encode_repeating_xor(str_input, key):
+    """
+    Applies a key to a string using repeating-key XOR.
+    
+    INPUTS:
+        * str_input: string to apply key.
+        * key: string
+    OUTPUTS:
+        * encoded string in hexadecimal format.
+    """
+    
+    unicode_encoded = []
+    iter_key = itertools.cycle(key)
+        
+    # Apply repeating-key XOR
+    for idx, chr_input in enumerate(str_input):
+        unicode_encoded.append(ord(chr_input) ^ ord(next(iter_key)))
+        
+    return bytes(unicode_encoded).hex()
     
     
